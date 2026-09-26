@@ -15,6 +15,7 @@ from ..utils.file_utils import (
     write_original_file,
 )
 from ..pipeline import PipelineRunner
+from .quota_service import QuotaService
 from ..models import SessionDep, Comment
 
 
@@ -69,6 +70,8 @@ class FileService:
         if duplicate:
             if not overwrite:
                 raise HTTPException(status_code=409, detail="already uploaded this file name")
+
+        QuotaService.consume(session, user.id, "analysis")
 
         run_id = datetime.utcnow().strftime("%Y%m%d%H%M%S%f")
         output_dir_name = f"{Path(upload_file.filename).stem}_{run_id}_{input_hash[:8]}"

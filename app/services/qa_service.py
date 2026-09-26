@@ -30,6 +30,12 @@ class QAService:
             timeout=API_TIMEOUTS.get("long", 600),
             stream=True,
         )
+        if response is not None and response.status_code == 429:
+            try:
+                detail = response.json().get("detail")
+            except Exception:
+                detail = None
+            return iter([f"⚠️ {detail or 'Daily chat limit reached.'}"]), None
         if not response or response.status_code != 200:
             return [], None
         

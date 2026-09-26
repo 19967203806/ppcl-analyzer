@@ -1,0 +1,20 @@
+[Unit]
+Description=PPCL Analyzer UI (Streamlit)
+After=network.target ppcl-backend.service
+Wants=ppcl-backend.service
+
+[Service]
+User=ppcl
+Group=ppcl
+WorkingDirectory=/opt/ppcl-analyzer
+ExecStart=/opt/ppcl-analyzer/.venv/bin/streamlit run app_main.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ppcl-analyzer
+
+[Install]
+WantedBy=multi-user.target

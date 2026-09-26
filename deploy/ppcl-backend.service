@@ -1,0 +1,19 @@
+[Unit]
+Description=PPCL Analyzer API (FastAPI)
+After=network.target
+
+[Service]
+User=ppcl
+Group=ppcl
+WorkingDirectory=/opt/ppcl-analyzer
+ExecStart=/opt/ppcl-analyzer/.venv/bin/python src_main.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ppcl-analyzer
+
+[Install]
+WantedBy=multi-user.target

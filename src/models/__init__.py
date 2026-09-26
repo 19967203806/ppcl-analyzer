@@ -5,6 +5,7 @@ from .file import File, FileBase, FilePublic
 from .seed import init_users
 from .comment import Comment
 from .auth_token import AuthToken
+from .usage import UsageEvent
 
 __all__ = [
     "engine",
@@ -19,4 +20,5 @@ __all__ = [
     "FilePublic",
     "init_users",
     "AuthToken",
+    "UsageEvent",
 ]

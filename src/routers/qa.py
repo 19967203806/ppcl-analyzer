@@ -6,6 +6,7 @@ from ..models import SessionDep
 from ..models.qa import ChatRequest, ChatHistoryResponse
 from ..dependencies import CurrentUser, get_owned_file
 from ..services.qa_service import QAService
+from ..services.quota_service import QuotaService
 
 router = APIRouter(tags=["qa"], prefix="/qa")
 
@@ -14,6 +15,7 @@ router = APIRouter(tags=["qa"], prefix="/qa")
 def chat(session: SessionDep, current_user: CurrentUser, payload: ChatRequest):
     if payload.file_id is not None:
         get_owned_file(session, payload.file_id, current_user)
+    QuotaService.consume(session, current_user.id, "chat")
     stream, trace_id, conversation_id = QAService.chat_stream(
         session=session,
         owner_id=current_user.id,
