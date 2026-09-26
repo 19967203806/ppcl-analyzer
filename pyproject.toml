@@ -1,0 +1,40 @@
+[project]
+name = "ppcl-flowchart"
+version = "0.1.0"
+description = "PPCL code analysis service and Streamlit client"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "langchain>=1,<2",
+    "langchain-openai>=1.0.1,<2",
+    "langgraph>=1.1,<2",
+    "loguru>=0.7,<1",
+    "markdown-pdf>=1.7,<2",
+    "openai>=1.50,<3",
+    "python-dotenv>=1.0,<2",
+    "python-multipart>=0.0.9,<1",
+    "requests>=2.32,<3",
+    "sqlmodel>=0.0.22,<1",
+    "streamlit==1.38.0",
+    "uvicorn[standard]>=0.30,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "httpx>=0.27,<1",
+    "pytest>=8,<9",
+]
+
+[project.scripts]
+ppcl-api = "src.backend:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src", "app"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
